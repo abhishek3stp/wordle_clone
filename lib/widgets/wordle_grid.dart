@@ -14,6 +14,7 @@ class WordleGrid extends ConsumerWidget {
     final gameState = ref.watch(gameStateProvider);
     final wordSize = gameSettings.wordSize;
     final attempts = gameSettings.attempts;
+    print(gameState.correctWord);
 
     final List<WordleRow> rows = List.empty(growable: true);
 
@@ -22,7 +23,16 @@ class WordleGrid extends ConsumerWidget {
       if (gameState.attempts.length > i) {
         word = gameState.attempts[i];
       }
-      rows.add(WordleRow(wordSize: wordSize, word: word));
+      var attempted = false;
+      if (gameState.attempted > i) {
+        attempted = true;
+      }
+      rows.add(WordleRow(
+        wordSize: wordSize,
+        word: word,
+        attempted: attempted,
+        correctWord: gameState.correctWord,
+      ));
     }
 
     return Container(
